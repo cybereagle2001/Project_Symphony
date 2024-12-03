@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        {% block stylesheets %}
+        <link rel="stylesheet" href="{{asset('form/assets/css/style.css')}}">
+        {% endblock %}
+    </head>
+    <body>
+        <center>
+            {% block body %}{% endblock %}
+            
+        </center>
+        <script src="{{asset('form/assets/js/style.js')}}"></script>
+    </body>
+</html>

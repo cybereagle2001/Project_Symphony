@@ -1,0 +1,114 @@
+/* General Reset */
+body {
+    margin: 0;
+    font-family: 'Poppins', Arial, sans-serif;
+    background: linear-gradient(135deg, #f4f4f4, #e0e0e0);
+    color: #333;
+    line-height: 1.6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* Ensures the form is vertically centered */
+}
+
+/* Header Styling */
+header {
+    background: linear-gradient(90deg, #0078d7, #0056a3);
+    color: white;
+    padding: 1.5rem;
+    text-align: center;
+    font-size: 1.8rem;
+    font-weight: bold;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+    border-bottom: 3px solid #0056a3;
+}
+
+/* Container Styling */
+.container {
+    max-width: 400px; /* Reduced width for a smaller form */
+    width: 100%; /* Ensures responsiveness */
+    margin: 1rem auto; /* Horizontally centers the container */
+    padding: 2rem;
+    background: #ffffff;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    border-radius: 12px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    text-align: center; /* Center-aligns content inside the container */
+}
+
+.container:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Form Styling */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    align-items: stretch; /* Ensures elements stretch to full width */
+}
+
+form label {
+    font-weight: 500;
+    color: #555;
+    text-align: left; /* Aligns labels to the left */
+}
+
+form input[type="text"], 
+form input[type="number"], 
+form select, 
+form textarea {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border 0.3s ease, box-shadow 0.3s ease;
+}
+
+form input[type="text"]:focus, 
+form input[type="number"]:focus, 
+form select:focus, 
+form textarea:focus {
+    border: 1px solid #0078d7;
+    box-shadow: 0 0 8px rgba(0, 120, 215, 0.5);
+    outline: none;
+}
+
+form button {
+    align-self: center; /* Centers the button within the form */
+    background: linear-gradient(90deg, #0078d7, #0056a3);
+    color: white;
+    font-size: 1rem;
+    border-radius: 20px;
+    padding: 0.8rem 1.5rem;
+    cursor: pointer;
+    transition: transform 0.2s ease, background 0.3s ease;
+}
+
+form button:hover {
+    transform: scale(1.05);
+    background: linear-gradient(90deg, #0056a3, #003f82);
+}
+
+/* Additional Styling for Textarea */
+form textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+/* Additional Styling for Form Actions */
+.form-actions {
+    display: flex;
+    justify-content: space-between;
+}
+
+button.secondary {
+    background: linear-gradient(90deg, #6c757d, #5a6268);
+    color: white;
+}
+
+button.secondary:hover {
+    background: linear-gradient(90deg, #5a6268, #495057);
+}

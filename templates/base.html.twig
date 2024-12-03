@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="{{asset('author/assets/css/style.css')}}">
+        {% block stylesheets %}
+        {% endblock %}
+
+        {% block javascripts %}
+        {% endblock %}
+    </head>
+    <body>
+        <center>
+            {% block body %}{% endblock %}
+            
+        </center>
+        <script src="{{asset('author/assets/js/script.js')}}"></script>
+    </body>
+</html>
