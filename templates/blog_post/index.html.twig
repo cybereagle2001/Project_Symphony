@@ -1,45 +1,66 @@
-{% extends 'base.html.twig' %}
+{% extends 'admin/admin_base.html.twig' %}
 
-{% block title %}BlogPost index{% endblock %}
+{% block title %}Blog Posts Management{% endblock %}
+
+{% block page_title %}Blog Posts Management{% endblock %}
 
 {% block body %}
-    <h1>BlogPost index</h1>
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Title</th>
-                <th>Slug</th>
-                <th>Description</th>
-                <th>Body</th>
-                <th>CreatedAt</th>
-                <th>UpdatedAt</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for blog_post in blog_posts %}
-            <tr>
-                <td>{{ blog_post.id }}</td>
-                <td>{{ blog_post.title }}</td>
-                <td>{{ blog_post.slug }}</td>
-                <td>{{ blog_post.description }}</td>
-                <td>{{ blog_post.body }}</td>
-                <td>{{ blog_post.createdAt ? blog_post.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ blog_post.updatedAt ? blog_post.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>
-                    <a href="{{ path('app_blog_post_show', {'id': blog_post.id}) }}">show</a>
-                    <a href="{{ path('app_blog_post_edit', {'id': blog_post.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="8">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <a href="{{ path('app_blog_post_new') }}">Create new</a>
+    <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">Blog Posts List</h5>
+            <a href="{{ path('app_blog_post_new') }}" class="btn btn-primary">
+                <i class="fas fa-plus me-1"></i> Create New Post
+            </a>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Title</th>
+                            <th>Description</th>
+                            <th>Author</th>
+                            <th>Created</th>
+                            <th>Last Updated</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for blog_post in blog_posts %}
+                        <tr>
+                            <td>
+                                <strong>{{ blog_post.title }}</strong>
+                                <div class="text-muted small">{{ blog_post.slug }}</div>
+                            </td>
+                            <td>{{ blog_post.description|length > 100 ? blog_post.description|slice(0, 100) ~ '...' : blog_post.description }}</td>
+                            <td>{{ blog_post.author ? blog_post.author.name : 'N/A' }}</td>
+                            <td>{{ blog_post.createdAt ? blog_post.createdAt|date('Y-m-d H:i') : '' }}</td>
+                            <td>{{ blog_post.updatedAt ? blog_post.updatedAt|date('Y-m-d H:i') : '' }}</td>
+                            <td>
+                                <div class="btn-group" role="group">
+                                    <a href="{{ path('app_blog_post_show', {'id': blog_post.id}) }}" class="btn btn-info btn-sm" title="View">
+                                        <i class="fas fa-eye"></i>
+                                    </a>
+                                    <a href="{{ path('app_blog_post_edit', {'id': blog_post.id}) }}" class="btn btn-warning btn-sm" title="Edit">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <form method="post" action="{{ path('app_blog_post_delete', {'id': blog_post.id}) }}" style="display: inline-block;" onsubmit="return confirm('Are you sure you want to delete this blog post?');">
+                                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ blog_post.id) }}">
+                                        <button class="btn btn-danger btn-sm" title="Delete">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="6" class="text-center">No blog posts found</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 {% endblock %}

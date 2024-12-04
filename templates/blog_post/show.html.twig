@@ -1,46 +1,76 @@
-{% extends 'base.html.twig' %}
+{% extends 'admin/admin_base.html.twig' %}
 
-{% block title %}BlogPost{% endblock %}
+{% block title %}Blog Post Details{% endblock %}
+
+{% block page_title %}Blog Post Details{% endblock %}
 
 {% block body %}
-    <h1>BlogPost</h1>
-
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ blog_post.id }}</td>
-            </tr>
-            <tr>
-                <th>Title</th>
-                <td>{{ blog_post.title }}</td>
-            </tr>
-            <tr>
-                <th>Slug</th>
-                <td>{{ blog_post.slug }}</td>
-            </tr>
-            <tr>
-                <th>Description</th>
-                <td>{{ blog_post.description }}</td>
-            </tr>
-            <tr>
-                <th>Body</th>
-                <td>{{ blog_post.body }}</td>
-            </tr>
-            <tr>
-                <th>CreatedAt</th>
-                <td>{{ blog_post.createdAt ? blog_post.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>UpdatedAt</th>
-                <td>{{ blog_post.updatedAt ? blog_post.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <a href="{{ path('app_blog_post_index') }}">back to list</a>
-
-    <a href="{{ path('app_blog_post_edit', {'id': blog_post.id}) }}">edit</a>
-
-    {{ include('blog_post/_delete_form.html.twig') }}
+    <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">Post Information</h5>
+            <div>
+                <a href="{{ path('app_blog_post_edit', {'id': blog_post.id}) }}" class="btn btn-warning">
+                    <i class="fas fa-edit me-1"></i> Edit
+                </a>
+                <a href="{{ path('app_blog_post_index') }}" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left me-1"></i> Back to List
+                </a>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row mb-4">
+                <div class="col-md-8">
+                    <h2 class="mb-3">{{ blog_post.title }}</h2>
+                    <div class="text-muted mb-3">
+                        <small>
+                            <i class="fas fa-link me-1"></i> {{ blog_post.slug }}
+                        </small>
+                    </div>
+                    <div class="mb-4">
+                        <strong>Description:</strong>
+                        <p class="mt-2">{{ blog_post.description }}</p>
+                    </div>
+                    <div>
+                        <strong>Content:</strong>
+                        <div class="mt-2 p-3 bg-light rounded">
+                            {{ blog_post.body|nl2br }}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-header">
+                            <h6 class="mb-0">Post Details</h6>
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-bordered">
+                                <tbody>
+                                    <tr>
+                                        <th class="table-light">Author</th>
+                                        <td>
+                                            {% if blog_post.author %}
+                                                <a href="{{ path('app_author_show', {'id': blog_post.author.id}) }}">
+                                                    {{ blog_post.author.name }}
+                                                </a>
+                                            {% else %}
+                                                <span class="text-muted">Unknown</span>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="table-light">Created</th>
+                                        <td>{{ blog_post.createdAt ? blog_post.createdAt|date('Y-m-d H:i') : '' }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="table-light">Last Updated</th>
+                                        <td>{{ blog_post.updatedAt ? blog_post.updatedAt|date('Y-m-d H:i') : '' }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

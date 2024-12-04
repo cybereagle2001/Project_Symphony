@@ -1,50 +1,103 @@
-{% extends 'base.html.twig' %}
+{% extends 'admin/admin_base.html.twig' %}
 
-{% block title %}Author{% endblock %}
+{% block title %}Author Details{% endblock %}
+
+{% block page_title %}Author Details{% endblock %}
 
 {% block body %}
-    <h1>Author</h1>
-
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ author.id }}</td>
-            </tr>
-            <tr>
-                <th>Name</th>
-                <td>{{ author.name }}</td>
-            </tr>
-            <tr>
-                <th>Title</th>
-                <td>{{ author.title }}</td>
-            </tr>
-            <tr>
-                <th>Username</th>
-                <td>{{ author.username }}</td>
-            </tr>
-            <tr>
-                <th>Shortbio</th>
-                <td>{{ author.shortbio }}</td>
-            </tr>
-            <tr>
-                <th>Phone</th>
-                <td>{{ author.phone }}</td>
-            </tr>
-            <tr>
-                <th>Github</th>
-                <td>{{ author.github }}</td>
-            </tr>
-            <tr>
-                <th>Password</th>
-                <td>{{ author.password }}</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <a href="{{ path('app_author_index') }}">back to list</a>
-
-    <a href="{{ path('app_author_edit', {'id': author.id}) }}">edit</a>
-
-    {{ include('author/_delete_form.html.twig') }}
+    <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">Author Information</h5>
+            <div>
+                <a href="{{ path('app_author_edit', {'id': author.id}) }}" class="btn btn-warning">
+                    <i class="fas fa-edit me-1"></i> Edit
+                </a>
+                <a href="{{ path('app_author_index') }}" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left me-1"></i> Back to List
+                </a>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <table class="table table-bordered">
+                        <tbody>
+                            <tr>
+                                <th class="table-light" style="width: 30%">Name</th>
+                                <td>{{ author.name }}</td>
+                            </tr>
+                            <tr>
+                                <th class="table-light">Title</th>
+                                <td>{{ author.title }}</td>
+                            </tr>
+                            <tr>
+                                <th class="table-light">Username</th>
+                                <td>{{ author.username }}</td>
+                            </tr>
+                            <tr>
+                                <th class="table-light">Short Bio</th>
+                                <td>{{ author.shortbio }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-md-6">
+                    <table class="table table-bordered">
+                        <tbody>
+                            <tr>
+                                <th class="table-light" style="width: 30%">Phone</th>
+                                <td>
+                                    <i class="fas fa-phone me-1"></i>
+                                    {{ author.phone }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th class="table-light">Github</th>
+                                <td>
+                                    {% if author.github %}
+                                        <i class="fab fa-github me-1"></i>
+                                        <a href="https://github.com/{{ author.github }}" target="_blank">
+                                            {{ author.github }}
+                                        </a>
+                                    {% else %}
+                                        <span class="text-muted">Not provided</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            {% if author.blogPosts|length > 0 %}
+                <div class="mt-4">
+                    <h5>Author's Blog Posts</h5>
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Title</th>
+                                    <th>Created At</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for post in author.blogPosts %}
+                                    <tr>
+                                        <td>{{ post.title }}</td>
+                                        <td>{{ post.createdAt ? post.createdAt|date('Y-m-d H:i') : '' }}</td>
+                                        <td>
+                                            <a href="{{ path('app_blog_post_show', {'id': post.id}) }}" class="btn btn-info btn-sm">
+                                                <i class="fas fa-eye"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
 {% endblock %}
